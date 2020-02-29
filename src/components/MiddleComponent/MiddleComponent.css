@@ -1,0 +1,75 @@
+.middle {
+    /*background: url("/assets/vine.png") no-repeat;*/
+    height: calc(100vh - 10em);
+    background-size: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.middle h1 {
+    margin: 0;
+}
+
+.container {
+    margin-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    flex-direction: column;
+    z-index: 1;
+}
+
+
+.container-left {
+    margin-top: 24px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-left: 0;
+    /*background: red;*/
+    width: 300px;
+}
+
+.container-left-country {
+    border: 1px solid black;
+
+}
+
+.container-right {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-left: 24px;
+    /*width: calc(25% - 18px);*/
+    width: calc(100% - 100% + 700px);
+}
+
+.container-right-menu {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 20px;
+    margin-top: 24px;
+    height: 104px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #eceae7;
+    background-color: #fff;
+}
+
+.container-right-menu-product {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.container-right-menu h3 {
+    margin-right: 16px;
+    font-size: 16px;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+.container-right-menu p {
+    margin-right: 16px;
+    font-size: 13px;
+    line-height: 16px;
+    color: #999;
+}
