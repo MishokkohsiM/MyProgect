@@ -1,25 +1,4 @@
-// import BaseComponents from '../BaseComponents/BaseComponenst.js';
 import React from 'react';
-
-// export class HeaderComponent extends BaseComponents {
-//   constructor(context) {
-//     super(context);
-//     this.template = Handlebars.compile(`
-// <Header class="header">
-//     <div>
-//         <img src="/assets/georgia.png" class="logo"/>
-//         <h1>Wine House</h1>
-//     </div>
-//
-//     <nav>
-//         <a  href="/">Меню</a>
-//         <a  href="/">Контакты</a>
-//         <a  href="/">Адрес</a>
-//     </nav>
-// </Header>
-//     `)
-//   }
-// }
 
 class HeaderComponent extends React.Component {
   render() {
@@ -30,9 +9,11 @@ class HeaderComponent extends React.Component {
             <h1>Wine House</h1>
           </div>
           <nav>
-            <a  href="/">Меню</a>
-            <a  href="/">Контакты</a>
-            <a  href="/">Адрес</a>
+            <a  href="/">Menu</a>
+            <a  href="/">Contacts</a>
+            <a  href="/">Users</a>
+            <a  href="/register">Sign Up</a>
+            <a  href="/login">Sign In</a>
           </nav>
         </div>
     )

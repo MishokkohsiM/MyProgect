@@ -3,3 +3,7 @@
 @import url('base.css');
 @import url('components/MiddleComponent/MiddleComponent.css');
 @import url('components/ProductMapComponent/ProductMapComponent.css');
+@import url('components/FormSignIn/FormSignIn.css');
+@import url('components/LeftMiddleComponent/LeftMiddleComponent.css');
+@import url('components/RightMiddleComponent/RightMiddleComponent.css');
+@import url('components/FormSignUp/FormSignUp.scss');

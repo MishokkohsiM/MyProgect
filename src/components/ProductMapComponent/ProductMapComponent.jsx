@@ -1,23 +1,25 @@
-// import BaseComponents from "../BaseComponents/BaseComponenst.js";
 import React from 'react';
-
-// export class ProductMapComponent extends BaseComponents{
-//   constructor(context) {
-//     super(context);
-//     this.template = Handlebars.compile(`
-//     <div class="product-map">
-//         {{ProductName}}
-//     </div>
-//     `);
-//   }
-// }
 
 class ProductMapComponent extends React.Component {
   render() {
     return (
-        <div className={"product-map"}>
-          {this.props.name}
+        <div className={'product-map'}>
+          <h1>
+            {this.props.name}
+          </h1>
+          <div className={'product-description'}>
+            <div className={'product-wrapper'}>
+                <div className={'product-img'}>
+                </div>
+            </div>
+            <div className={'product-description-wine'}>
+              <div>County - Georgia</div>
+              <div>Price -  10 $</div>
+              <div>Age -    2015</div>
+            </div>
+          </div>
         </div>
+
     )
   }
 }

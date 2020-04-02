@@ -38,12 +38,13 @@ module.exports = {
       }
     ]
   },
+  devtool: "source-map",
   devServer: {
     contentBase: path.join(__dirname, "src"),
-    compress: true,
     port: 8000,
-    watchContentBase: true,
-    progress: true
+    disableHostCheck: true,
+    hotOnly: true,
+    historyApiFallback: true,
   },
 };
 

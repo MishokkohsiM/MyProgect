@@ -1,0 +1,102 @@
+.left-container {
+    margin-top: 117px;
+    margin-left: 20px;
+    min-width: 300px;
+    color: red;
+}
+
+.country {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    /*height: 175px;*/
+    border: 2px solid grey;
+}
+
+.country-text-choose {
+    font-family: 'Galada', cursive;
+    text-align: center;
+    font-size: 20px;
+}
+
+.country-text {
+    margin-top: 2px;
+    color: black;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.country-text:before {
+    content: "\f054";
+    color: black;
+    font-family: FontAwesome;
+}
+
+.black:before {
+    color: black;
+}
+
+.red:before {
+    color: red;
+}
+
+
+.country-text:hover {
+    color: green;
+}
+
+.button-country {
+    cursor: pointer;
+    margin-top: 3px;
+    position: relative;
+    display: inline-block;
+    font-size: 90%;
+    color: rgb(209, 209, 217);
+    text-decoration: none;
+    text-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
+    padding: .5em 1em;
+    outline: none;
+    border-radius: 3px;
+    background: linear-gradient(rgb(110, 112, 120), rgb(81, 81, 86)) rgb(110, 112, 120);
+
+}
+
+.scroll {
+    align-self: center;
+    margin-top: 10px;
+    width: 110px;
+    height: 100px;
+    overflow: auto;
+}
+
+::-webkit-scrollbar-button {
+    background-repeat: no-repeat;
+    width: 6px;
+    height: 100px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #32312e;
+    border-radius: 5px;
+    height: 100px;
+    box-shadow: 0px 0px 2px #000 inset;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #ff1a21;
+    box-shadow: 0px 1px 1px #fff inset;
+    background-image: url('https://yraaa.ru/_pu/24/59610063.png');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+::-webkit-resizer {
+    background-repeat: no-repeat;
+    width: 7px;
+}
+
+::-webkit-scrollbar {
+    width: 11px;
+}

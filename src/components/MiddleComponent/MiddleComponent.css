@@ -1,5 +1,5 @@
 .middle {
-    /*background: url("/assets/vine.png") no-repeat;*/
+    /*background: url("/assets/wine.png") no-repeat;*/
     height: calc(100vh - 10em);
     background-size: 100%;
     display: flex;
@@ -30,7 +30,7 @@
 }
 
 .container-left-country {
-    border: 1px solid black;
+    border: 1px solid #000000;
 
 }
 
