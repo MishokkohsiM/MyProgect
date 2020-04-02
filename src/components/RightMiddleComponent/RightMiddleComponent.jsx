@@ -8,9 +8,6 @@ class RightMiddleComponent extends React.Component {
     super(props);
     this.state = {
       products: null,
-      count: null,
-      number: 3,
-      pagesSpan: null,
     }
   }
 
@@ -24,8 +21,14 @@ class RightMiddleComponent extends React.Component {
           />
           </div>
           <div className='wine-catalog'>
-            {this.state.products && this.state.products.map((name) => (
-                <ProductMapComponent name={name} key={name}/>
+            {this.state.products && this.state.products.map((el) => (
+                <ProductMapComponent
+                    name={el.wine_name}
+                    price={el.wine_price}
+                    age={el.wine_age}
+                    country={el.wine_country}
+                    key={el.name}
+                />
             ))}
           </div>
         </div>
@@ -39,9 +42,8 @@ class RightMiddleComponent extends React.Component {
           return res.json();
         })
         .then(json => {
-          console.log(json.Products);
-          this.setState({products: json.Products,
-          count: json.Products.length,
+          console.log(json.results);
+          this.setState({products: json.results,
           })
         });
   }

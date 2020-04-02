@@ -1,7 +1,34 @@
 import React from 'react';
+import {NavLink} from "react-router-dom";
 
 class HeaderComponent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const {userName} = this.props;
+    const {isAuthorized} = this.props;
+
+    const Authorized = isAuthorized ? (
+            <div>
+              <NavLink to="/">Menu</NavLink>
+              <NavLink to="/">Contacts</NavLink>
+              <NavLink to="/">Users</NavLink>
+              <NavLink to='/'>Profile</NavLink>
+            </div>
+        ) :
+        (
+            <div>
+              <p>{userName}</p>
+              <NavLink to="/">Menu</NavLink>
+              <NavLink to="/">Contacts</NavLink>
+              <NavLink to="/">Users</NavLink>
+              <NavLink to="/register">Sign Up</NavLink>
+              <NavLink to="/login">Sign In</NavLink>
+            </div>
+        );
+
     return (
         <div className="header">
           <div>
@@ -9,11 +36,7 @@ class HeaderComponent extends React.Component {
             <h1>Wine House</h1>
           </div>
           <nav>
-            <a  href="/">Menu</a>
-            <a  href="/">Contacts</a>
-            <a  href="/">Users</a>
-            <a  href="/register">Sign Up</a>
-            <a  href="/login">Sign In</a>
+            {Authorized}
           </nav>
         </div>
     )

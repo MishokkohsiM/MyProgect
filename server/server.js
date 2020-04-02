@@ -2,9 +2,13 @@
 
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const crypto = require('crypto');
 const express = require('express'),
     app = express(),
     request = require('request');
+
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://127.0.0.1:27017';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -35,7 +39,6 @@ const Countries = [
   'Spain',
   'Portugal',
   'Holland',
-  'Great Britain',
 ];
 
 const RESPONSE_CODES = {
@@ -66,8 +69,16 @@ app.get('/api/', (req, res) => {
 app.get('/products', (req, res) => {
   console.log('products');
   res.set('Access-Control-Allow-Origin', '*');
-  res.json({
-    Products,
+  MongoClient.connect(url, (err, db) => {
+    if (err) throw err;
+    const dbo = db.db('xui');
+    dbo.collection('sessions').find().toArray(function (err, results) {
+      if (err) throw err;
+      res.json({
+        results,
+      });
+      db.close();
+    });
   });
 });
 
@@ -91,11 +102,56 @@ app.post('/login', cors(), (req, res) => {
     })
   } else {
     const toInsert = {};
+    res.status(RESPONSE_CODES.OK);
     toInsert.login = req.body.login;
     toInsert.password = req.body.password;
     console.log(toInsert);
-    res.status(RESPONSE_CODES.OK);
     res.json(toInsert);
+  }
+});
+
+app.post('/wine', cors(), (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Credentials', 'true');
+  console.log('addWine');
+  if (!req.body || !req.body.wine_name || !req.body.wine_age ||
+      !req.body.wine_country || !req.body.wine_price) {
+    res.status(RESPONSE_CODES.FORBIDDEN);
+    res.json({
+      message: 'Wrong request body format'
+    });
+  } else {
+    const md5sum = crypto.createHash('md5');
+    md5sum.update(req.body.wine_name + req.body.wine_country);
+    console.log(req.body.wine_name);
+    MongoClient.connect(url, (err, db) => {
+      if (err) throw err;
+      const dbo = db.db('xui');
+      dbo.collection('sessions').findOne({wine_name: req.body.wine_name}, (err, result) => {
+        console.log(result);
+        if (!err && result) {
+          res.status(RESPONSE_CODES.CONFLICT);
+          console.log('User already exists');
+          res.json({
+            message: 'User already exists'
+          });
+        } else {
+          const toInsert = {};
+          toInsert.wine_name = req.body.wine_name;
+          toInsert.wine_age = req.body.wine_age;
+          toInsert.wine_price = req.body.wine_price;
+          toInsert.wine_country = req.body.wine_country;
+          toInsert.sissionID = md5sum.digest('hex');
+          dbo.collection('sessions').insertOne(toInsert, (err) => {
+            if (!err) {
+              res.status(RESPONSE_CODES.OK);
+              res.json(toInsert);
+            }
+          })
+        }
+        db.close();
+      });
+    })
   }
 });
 

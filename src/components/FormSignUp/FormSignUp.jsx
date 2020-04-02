@@ -73,7 +73,7 @@ class FormSignUp extends React.Component {
   };
 
   Click = () => {
-    console.log('registr');
+    console.log('reg');
   };
 }
 

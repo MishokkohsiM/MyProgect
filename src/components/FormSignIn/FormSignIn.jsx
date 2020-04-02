@@ -1,6 +1,7 @@
 import React from 'react';
 import InputComponents from "../InputComponents/InputComponents.jsx";
 import Button from "../Button/Button.jsx";
+import UserService from "../../services/UserService.js";
 
 
 class FormSignIn extends React.Component {
@@ -99,37 +100,20 @@ class FormSignIn extends React.Component {
       login: document.getElementById('signIn__login').value,
       password: document.getElementById('signIn__password').value,
     };
-    const js = JSON.stringify(body);
     if (formIsValid) {
-      fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-        mode: 'cors',
-        body: js
-      })
-          .then(res => {
-            const isSuccess = res.status === 200;
-            if (isSuccess) {
-              return res.json();
-            } else {
-              return {massage: 'error'}
-            }
-          })
-          .then((data) => {
-            if (data.message === 'error') {
+      user.login(body)
+          .then(data => {
+            if (data.massage === 'error') {
               console.log('error');
             } else {
-              console.log(data.password);
-              return {
-                message: data.message,
-                data,
-              };
+              user.userName = data.login;
             }
           })
+          .catch(data => {
+                console.log(data.massage);
+              }
+          )
     }
-    return false;
   }
 }
 

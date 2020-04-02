@@ -13,9 +13,9 @@ class ProductMapComponent extends React.Component {
                 </div>
             </div>
             <div className={'product-description-wine'}>
-              <div>County - Georgia</div>
-              <div>Price -  10 $</div>
-              <div>Age -    2015</div>
+              <div>County - {this.props.country}</div>
+              <div>Price -  {this.props.price}</div>
+              <div>Age -    {this.props.age}</div>
             </div>
           </div>
         </div>
