@@ -46,7 +46,36 @@ class LeftMiddleComponent extends React.Component {
     }
   };
 
-  Onclick = () => {
+  Onclick = (el) => {
+    el.preventDefault();
+    const js = {
+      countries: this.countries
+    };
+    const Product = {};
+    const urlPost = 'http://127.0.0.1:3000/select';
+    fetch(urlPost, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: JSON.stringify(js),
+    })
+        .then(res => {
+          const isSuccess = res.status === 200;
+          if (isSuccess) {
+            return (res.json());
+          } else {
+            return {massage: 'error'};
+          }
+        })
+        .then(data => {
+          if (data.massage === 'error') {
+            console.log('error');
+          } else {
+            console.log(data.result);
+          }
+        });
     console.log(this.countries);
   };
 

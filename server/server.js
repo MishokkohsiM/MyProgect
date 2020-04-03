@@ -82,13 +82,6 @@ app.get('/products', (req, res) => {
   });
 });
 
-app.get('/countries', (req, res) => {
-  console.log('countries');
-  res.set('Access-Control-Allow-Origin', '*');
-  res.json({
-    Countries,
-  });
-});
 
 app.post('/login', cors(), (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
@@ -152,6 +145,71 @@ app.post('/wine', cors(), (req, res) => {
         db.close();
       });
     })
+  }
+});
+
+app.get('/countries', (req, res) => {
+  console.log('countries');
+  res.set('Access-Control-Allow-Origin', '*');
+  res.json({
+    Countries,
+  });
+});
+
+app.get('/product/:productName', (req, res) => {
+  console.log(req.params);
+  res.set('Access-Control-Allow-Origin', '*');
+  const product = req.params['productName'];
+  MongoClient.connect(url, (err, db) => {
+    if (err) throw err;
+    const dbo = db.db('xui');
+    dbo.collection('descriptionProduct').findOne({productName: product}, (err, result) => {
+      console.log(result);
+      if (!err && result) {
+        res.json({
+          name: result.productName,
+          info: result.productInfo
+        });
+      } else {
+        res.json({
+          name: product,
+          info: 'Описания нет',
+        });
+      }
+      db.close();
+    })
+  });
+});
+
+// Разобраться
+app.post('/select', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Credentials', 'true');
+  console.log(req.body);
+  if (!req.body || !req.body.countries) {
+    res.status(RESPONSE_CODES.FORBIDDEN);
+    res.json({
+      message: 'Wrong request body format'
+    });
+  } else {
+    MongoClient.connect(url, (err, db) => {
+      if (err) throw err;
+      const dbo = db.db('xui');
+      const arr = req.body.countries;
+      dbo.collection('sessions').find({'wine_country': {$in: arr}}).toArray((err, result) => {
+        console.log(result);
+        if (!err && result) {
+          res.json({
+            result
+          });
+        } else {
+          res.json({
+            message: 'Empty'
+          });
+        }
+      });
+      db.close();
+    });
   }
 });
 

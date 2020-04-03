@@ -23,11 +23,11 @@ class RightMiddleComponent extends React.Component {
           <div className='wine-catalog'>
             {this.state.products && this.state.products.map((el) => (
                 <ProductMapComponent
+                    key={el.wine_name.toString()}
                     name={el.wine_name}
                     price={el.wine_price}
                     age={el.wine_age}
                     country={el.wine_country}
-                    key={el.name}
                 />
             ))}
           </div>
