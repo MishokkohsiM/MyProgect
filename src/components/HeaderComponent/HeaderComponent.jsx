@@ -1,26 +1,27 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {NavLink} from "react-router-dom";
+import {Logout} from '../../redux/auth/auth.action.js';
+import Button from "../Button/Button.jsx";
 
 class HeaderComponent extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
-    const {userName} = this.props;
-    const {isAuthorized} = this.props;
+    const {userName, isAuthorized, logout} = this.props;
 
     const Authorized = isAuthorized ? (
+
             <div>
+              <NavLink to='/'>{userName}</NavLink>
               <NavLink to="/">Menu</NavLink>
               <NavLink to="/">Contacts</NavLink>
               <NavLink to="/">Users</NavLink>
-              <NavLink to='/'>Profile</NavLink>
+              <Button name={'logout'} onclick={logout}/>
             </div>
+
         ) :
         (
             <div>
-              <p>{userName}</p>
               <NavLink to="/">Menu</NavLink>
               <NavLink to="/">Contacts</NavLink>
               <NavLink to="/">Users</NavLink>
@@ -43,4 +44,20 @@ class HeaderComponent extends React.Component {
   }
 }
 
-export default HeaderComponent;
+const makeMapStateToProps = () => {
+  return (store) => {
+    return {
+      isAuthorized: store.auth.isAuthorized,
+      userName: store.auth.userName,
+    }
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(Logout()),
+
+  }
+};
+
+export default connect(makeMapStateToProps(), mapDispatchToProps)(HeaderComponent);

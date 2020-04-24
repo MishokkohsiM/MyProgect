@@ -1,8 +1,10 @@
 import React from 'react';
 import InputComponents from "../InputComponents/InputComponents.jsx";
 import Button from "../Button/Button.jsx";
-import UserService from "../../services/UserService.js";
-
+import {connect} from 'react-redux';
+import {Login} from "../../redux/auth/auth.action";
+import history from "../../middleware/history/history.js";
+import {PATHS} from "../../router.jsx";
 
 class FormSignIn extends React.Component {
   constructor(props) {
@@ -10,6 +12,7 @@ class FormSignIn extends React.Component {
     this.loginIsValid = true;
     this.passwordIsValid = true;
     this.formIsValid = true;
+    // this.clickHandler = this.validate.bind(this);
   }
 
   render() {
@@ -96,17 +99,20 @@ class FormSignIn extends React.Component {
     this.validate();
     const {formIsValid} = this;
     console.log('Form -', formIsValid);
-    const body = {
-      login: document.getElementById('signIn__login').value,
-      password: document.getElementById('signIn__password').value,
-    };
     if (formIsValid) {
+      const {setAuthData} = this.props;
+      const body = {
+        login: document.getElementById('signIn__login').value,
+        password: document.getElementById('signIn__password').value,
+      };
       user.login(body)
           .then(data => {
             if (data.massage === 'error') {
               console.log('error');
             } else {
-              user.userName = data.login;
+              setAuthData(data.login);
+              console.log(data.login);
+              history.push(PATHS.MENU);
             }
           })
           .catch(data => {
@@ -117,4 +123,14 @@ class FormSignIn extends React.Component {
   }
 }
 
-export default FormSignIn;
+const mapStateToProps = () => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setAuthData: (data) => dispatch(Login(data))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormSignIn);

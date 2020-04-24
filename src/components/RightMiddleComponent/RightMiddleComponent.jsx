@@ -49,4 +49,5 @@ class RightMiddleComponent extends React.Component {
   }
 }
 
+
 export default RightMiddleComponent;
