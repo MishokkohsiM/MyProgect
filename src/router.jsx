@@ -12,14 +12,14 @@ export const PATHS = {
   SIGN_IN: '/login',
   SIGN_UP: '/register',
   ERROR: '/404',
-  PRODUCT: '/product',
+  PRODUCT: '/product/:product',
   ADMIN: '/admin'
 };
 
 export const router = [
   <Route exact path={PATHS.ADMIN} component={Admin} key={PATHS.ADMIN}/>,
   <Route exact path={PATHS.MENU} component={Main} key={PATHS.MENU}/>,
-  <Route exact path={PATHS.PRODUCT} component={Product} key={PATHS.PRODUCT}/>,
+  <Route  path={PATHS.PRODUCT} component={Product} key={PATHS.PRODUCT}/>,
   <Route exact path={PATHS.SIGN_IN} component={SignIn} key={PATHS.SIGN_IN}/>,
   <Route exact path={PATHS.SIGN_UP} component={SignUp} key={PATHS.SIGN_UP}/>,
 ];

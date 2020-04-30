@@ -1,6 +1,6 @@
 const initialState = {
-  isAuthorized: true,
-  userName: 'cec',
+  isAuthorized: false,
+  userName: '',
 };
 
 export const AuthActionTypes = {

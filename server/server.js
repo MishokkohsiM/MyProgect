@@ -165,6 +165,7 @@ app.get('/product/:productName', (req, res) => {
     const dbo = db.db('xui');
     dbo.collection('descriptionProduct').findOne({productName: product}, (err, result) => {
       console.log(result);
+      if (err) throw err;
       if (!err && result) {
         res.json({
           name: result.productName,
@@ -176,6 +177,47 @@ app.get('/product/:productName', (req, res) => {
           info: 'Описания нет',
         });
       }
+      db.close();
+    })
+  });
+});
+
+const count = 4;
+function pageNumber (obj, page) {
+  console.log('tut');
+  const start = count * (page - 1);
+  let end = count * page;
+  if (end > obj.length) {
+    end = obj.length;
+  }
+  let result = [];
+  for(let i = start; i < end; i++) {
+    result.push(obj[i]);
+  }
+  return result;
+}
+
+app.get('/page/:page', (req, res) => {
+  console.log(req.params);
+  res.set('Access-Control-Allow-Origin', '*');
+  const page = req.params['page'];
+  MongoClient.connect(url, (err, db) => {
+    if (err) throw err;
+    const dbo = db.db('xui');
+    dbo.collection('sessions').find().toArray(function (err, result){
+      if (err) throw err;
+      // console.log(result);
+      let pages = result.length / count;
+      let pageArr = [];
+      for (let i = 0; i < pages; i ++) {
+        pageArr.push(i+1)
+      }
+      let newResult = pageNumber(result, page);
+      console.log(newResult);
+      res.json ({
+        newResult,
+        pages,
+      })
       db.close();
     })
   });

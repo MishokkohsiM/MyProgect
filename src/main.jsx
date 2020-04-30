@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import {router} from './router.jsx';
 import {Provider} from 'react-redux';
 import {Router} from "react-router";
+import {Switch} from "react-router";
 
 import App from './Containers/App/App.jsx'
 import history from "./middleware/history/history.js";
@@ -12,14 +13,16 @@ import configureStore from "./store/index.js";
 const store = configureStore();
 
 window.user = new UserService();
-const application = document.getElementById('application');
+// const application = document.getElementById('application');
 
 const render = (component) => {
   ReactDOM.render(
       (
           <Provider store={store}>
             <Router history={history}>
-              {component}
+              <Switch>
+                {component}
+              </Switch>
             </Router>
           </Provider>
       )

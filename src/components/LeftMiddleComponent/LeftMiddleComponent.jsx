@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from "../Button/Button.jsx";
 import TextComponent from "../TextComponent/TextComponent.jsx";
+import {selectWine, Reset} from "../../redux/selectWine/selectWine.action.js";
+import {connect} from 'react-redux';
 
 class LeftMiddleComponent extends React.Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class LeftMiddleComponent extends React.Component {
   }
 
   render() {
+    const {selected} = this.props;
     return (
         <div className="left-container">
           <div className="country">
@@ -48,35 +51,46 @@ class LeftMiddleComponent extends React.Component {
 
   Onclick = (el) => {
     el.preventDefault();
-    const js = {
-      countries: this.countries
-    };
-    const Product = {};
-    const urlPost = 'http://127.0.0.1:3000/select';
-    fetch(urlPost, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify(js),
-    })
-        .then(res => {
-          const isSuccess = res.status === 200;
-          if (isSuccess) {
-            return (res.json());
-          } else {
-            return {massage: 'error'};
-          }
-        })
-        .then(data => {
-          if (data.massage === 'error') {
-            console.log('error');
-          } else {
-            console.log(data.result);
-          }
-        });
+    console.log(this.countries.length);
+    // const js = {
+    //   countries: this.countries
+    // };
+    // const Product = {};
+    // const urlPost = 'http://127.0.0.1:3000/select';
+    // fetch(urlPost, {
+    //   method: 'POST',
+    //   mode: 'cors',
+    //   headers: {
+    //     'Content-Type': 'application/json; charset=utf-8',
+    //   },
+    //   body: JSON.stringify(js),
+    // })
+    //     .then(res => {
+    //       const isSuccess = res.status === 200;
+    //       if (isSuccess) {
+    //         return (res.json());
+    //       } else {
+    //         return {massage: 'error'};
+    //       }
+    //     })
+    //     .then(data => {
+    //       if (data.massage === 'error') {
+    //         console.log('error');
+    //       } else {
+    //         console.log(data.result);
+    //       }
+    //     });
     console.log(this.countries);
+
+    if (this.countries.length > 0) {
+      console.log('TUT');
+      const {selected, reset} = this.props;
+      reset();
+      selected(this.countries);
+    } else {
+      const {reset} = this.props;
+      reset();
+    }
   };
 
   componentDidMount() {
@@ -92,4 +106,20 @@ class LeftMiddleComponent extends React.Component {
   }
 }
 
-export default LeftMiddleComponent;
+const makeMapStateToProps = () => {
+  return (store) => {
+    return {
+      isSelect: store.select.isSelect,
+      countries: store.select.countries,
+    }
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selected: (data) => dispatch(selectWine(data)),
+    reset : () => dispatch(Reset()),
+  }
+}
+
+export default connect(makeMapStateToProps(),mapDispatchToProps)(LeftMiddleComponent);

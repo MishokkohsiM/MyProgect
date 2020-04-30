@@ -5,5 +5,6 @@
 @import url('components/ProductMapComponent/ProductMapComponent.css');
 @import url('components/FormSignIn/FormSignIn.css');
 @import url('components/LeftMiddleComponent/LeftMiddleComponent.css');
-@import url('components/RightMiddleComponent/RightMiddleComponent.css');
+@import url('components/RightMiddleComponent/RightMiddleComponent.scss');
 @import url('components/FormSignUp/FormSignUp.scss');
+

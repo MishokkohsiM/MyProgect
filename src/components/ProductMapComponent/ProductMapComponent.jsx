@@ -1,4 +1,6 @@
 import React from 'react';
+import history from "../../middleware/history/history.js";
+import {PATHS} from "../../router.jsx";
 
 class ProductMapComponent extends React.Component {
   constructor(props) {
@@ -27,27 +29,23 @@ class ProductMapComponent extends React.Component {
   }
 
   ShowProduct = (productCard) => {
-
     productCard.preventDefault();
-    const urGet = `http://localhost:3000/product/`;
-    const url = `http://localhost:8000/product/`;
+    // const urGet = `http://localhost:3000/product/`;
     const product =  this.props.name;
-    const info = {};
-    const urlGet = urGet + product;
-    console.log(urlGet);
-    fetch(urlGet)
-        .then(res => {
-          return res.json();
-        })
-        .then(json => {
-          // console.log(json.name);
-          info.name = json.name;
-          info.productInfo = json.info;
-          console.log(info);
-        });
-    const title = 'Hello World';
-    history.pushState(info, title, url);
-    // history.go();
+    // const info = {};
+    // const urlGet = urGet + product;
+    // console.log(urlGet);
+    // fetch(urlGet)
+    //     .then(res => {
+    //       return res.json();
+    //     })
+    //     .then(json => {
+    //       // console.log(json.name);
+    //       info.name = json.name;
+    //       info.productInfo = json.info;
+    //       console.log(info);
+    //     });
+    history.push(`/product/${product}`);
   }
 }
 
