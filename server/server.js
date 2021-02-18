@@ -8,6 +8,7 @@ const express = require('express'),
     request = require('request');
 
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 const url = 'mongodb://127.0.0.1:27017';
 
 app.use(bodyParser.json());
@@ -181,6 +182,38 @@ app.get('/product/:productName', (req, res) => {
   });
 });
 
+/**
+ * Поиск по id
+ */
+app.post('/productId', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Credentials', 'true');
+  if (!req.body ) {
+    res.status(RESPONSE_CODES.FORBIDDEN);
+    res.json({
+      message: 'Wrong request body format'
+    });
+  } else {
+    MongoClient.connect(url, (err, db) => {
+      if (err) throw err;
+      const dbo = db.db('xui');
+      dbo.collection('sessions').findOne({_id: ObjectId(req.body.id)}, (err, result) => {
+        if (!err && result) {
+          res.json({
+            ...result
+          });
+        } else {
+          res.json({
+            name: 'product',
+            info: 'Описания нет',
+          });
+        }
+        db.close();
+      })
+    });
+  }
+});
+
 // Разобраться
 app.post('/select', (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
@@ -196,6 +229,7 @@ app.post('/select', (req, res) => {
       if (err) throw err;
       const dbo = db.db('xui');
       const arr = req.body.countries;
+      console.log(arr);
       dbo.collection('sessions').find({'wine_country': {$in: arr}}).toArray((err, result) => {
         console.log(result);
         if (!err && result) {
