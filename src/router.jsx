@@ -12,7 +12,7 @@ export const PATHS = {
   SIGN_IN: '/login',
   SIGN_UP: '/register',
   ERROR: '/404',
-  PRODUCT: '/product',
+  PRODUCT: '/product/:productName/',
   ADMIN: '/admin'
 };
 

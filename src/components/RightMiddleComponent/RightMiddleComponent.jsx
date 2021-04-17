@@ -1,13 +1,15 @@
 import React from 'react';
+
 import ProductMapComponent from "../ProductMapComponent/ProductMapComponent.jsx";
 import TextComponent from "../TextComponent/TextComponent.jsx";
+import fetchProduct from '../../server/controllers/Products'
 
 
 class RightMiddleComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: null,
+      products: [],
     }
   }
 
@@ -21,13 +23,13 @@ class RightMiddleComponent extends React.Component {
           />
           </div>
           <div className='wine-catalog'>
-            {this.state.products && this.state.products.map((el) => (
+            {this.state.products && this.state.products.map((product, index) => (
                 <ProductMapComponent
-                    key={el.wine_name.toString()}
-                    name={el.wine_name}
-                    price={el.wine_price}
-                    age={el.wine_age}
-                    country={el.wine_country}
+                    key={product.wine_name.toString() + index}
+                    name={product.wine_name}
+                    price={product.wine_price}
+                    age={product.wine_age}
+                    country={product.wine_country}
                 />
             ))}
           </div>
@@ -36,16 +38,17 @@ class RightMiddleComponent extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://127.0.0.1:3031/products')
-        .then(res => {
-          console.log(res.json);
-          return res.json();
+    fetchProduct.getProducts()
+        .then(result => {
+            this.setState({
+                products: result,
+            })
         })
-        .then(json => {
-          console.log(json.results);
-          this.setState({products: json.results,
-          })
-        });
+        .catch(result => {
+            this.setState({
+                products: result,
+            })
+        })
   }
 }
 

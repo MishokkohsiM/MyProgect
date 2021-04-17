@@ -49,31 +49,6 @@ const RESPONSE_CODES = {
     CONFLICT: 409
 };
 
-const User = {
-    name: 'Misha'
-};
-
-const Prise = [
-    {
-        wine_name: 1,
-        wine_price: 150,
-        wine_age: 2012,
-        wine_country: 'Russian',
-    },
-    {
-        wine_name: 1,
-        wine_price: 150,
-        wine_age: 2012,
-        wine_country: 'Russian',
-    },
-    {
-        wine_name: 1,
-        wine_price: 150,
-        wine_age: 2012,
-        wine_country: 'Russian',
-    },
-];
-
 app.get('/api/', (req, res) => {
     request('http://127.0.0.1:8000', (err, response, body) => {
         if (err) {
@@ -89,7 +64,7 @@ app.get('/api/', (req, res) => {
 });
 
 app.get('/products', (req, res) => {
-    console.log('products');
+    console.log(req.method, '-', '/proxy/products');
     res.set('Access-Control-Allow-Origin', '*');
     fetch(`${serverUrl}/products`)
         .then(res => {
@@ -171,36 +146,27 @@ app.post('/wine', cors(), (req, res) => {
 });
 
 app.get('/countries', (req, res) => {
-    console.log('countries');
+    console.log(req.method,'-', '/proxy/countries');
     res.set('Access-Control-Allow-Origin', '*');
-    res.json({
-        Countries,
-    });
+    fetch(`${serverUrl}/countries`)
+        .then(result => {
+            if (result.status === RESPONSE_CODES.OK) {
+                return result.json();
+            }
+        })
+        .then(result => {
+            res.json({...result});
+        })
+        .catch(error => {
+            console.log(error);
+            res.json({Countries: []})
+        })
 });
 
 app.get('/product/:productName', (req, res) => {
-    console.log(req.params);
     res.set('Access-Control-Allow-Origin', '*');
+    console.log(req.method, '-', '/proxy/product');
     const product = req.params['productName'];
-    // MongoClient.connect(url, (err, db) => {
-    //     if (err) throw err;
-    //     const dbo = db.db('xui');
-    //     dbo.collection('descriptionProduct').findOne({productName: product}, (err, result) => {
-    //         console.log(result);
-    //         if (!err && result) {
-    //             res.json({
-    //                 name: result.productName,
-    //                 info: result.productInfo
-    //             });
-    //         } else {
-    //             res.json({
-    //                 name: product,
-    //                 info: 'Описания нет',
-    //             });
-    //         }
-    //         db.close();
-    //     })
-    // });
     res.json({
         name: product,
         info: 'Описания нет',

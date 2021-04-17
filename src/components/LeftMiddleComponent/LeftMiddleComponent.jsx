@@ -1,6 +1,8 @@
 import React from 'react';
+
 import Button from "../Button/Button.jsx";
 import TextComponent from "../TextComponent/TextComponent.jsx";
+import fetchCountries from '../../server/controllers/Countries';
 
 class LeftMiddleComponent extends React.Component {
   constructor(props) {
@@ -18,16 +20,18 @@ class LeftMiddleComponent extends React.Component {
             <TextComponent class={'country-text-choose'} name={"Choose county"}/>
             <div className='scroll'>
               {this.state.countries && this.state.countries.map((name, index) =>
-                  <TextComponent class={'country-text'}
-                                 name={name}
-                                 onclick={this.CountryClick}
-                                 key={index}
+                  <TextComponent
+                    class={'country-text'}
+                    name={name}
+                    onclick={this.CountryClick}
+                    key={index}
                   />
               )}
             </div>
-            <Button class={'button-country'}
-                    name={'Select'}
-                    onclick={this.Onclick}
+            <Button
+              class={'button-country'}
+              name={'Select'}
+              onclick={this.Onclick}
             />
           </div>
         </div>
@@ -51,7 +55,6 @@ class LeftMiddleComponent extends React.Component {
     const js = {
       countries: this.countries
     };
-    const Product = {};
     const urlPost = 'http://127.0.0.1:3000/select';
     fetch(urlPost, {
       method: 'POST',
@@ -80,14 +83,16 @@ class LeftMiddleComponent extends React.Component {
   };
 
   componentDidMount() {
-    fetch('http://127.0.0.1:3000/countries')
-        .then(res => {
-          console.log(res.json);
-          return res.json();
+    fetchCountries.getCountries()
+        .then(result => {
+          this.setState({
+            countries: result,
+          })
         })
-        .then(json => {
-          console.log(json.Countries);
-          this.setState({countries: json.Countries})
+        .catch(result => {
+          this.setState({
+            countries: result,
+          })
         })
   }
 }

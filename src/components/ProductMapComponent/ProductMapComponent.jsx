@@ -1,5 +1,7 @@
 import React from 'react';
 
+import fetchProduct from '../../server/controllers/Products';
+
 class ProductMapComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -27,26 +29,13 @@ class ProductMapComponent extends React.Component {
   }
 
   ShowProduct = (productCard) => {
-
     productCard.preventDefault();
-    const urGet = `http://localhost:3031/product/`;
-    const url = `http://localhost:8000/product/`;
     const product =  this.props.name;
-    const info = {};
-    const urlGet = urGet + product;
-    console.log(urlGet);
-    fetch(urlGet)
-        .then(res => {
-          return res.json();
-        })
-        .then(json => {
-          // console.log(json.name);
-          info.name = json.name;
-          info.productInfo = json.info;
-          console.log(info);
-        });
-    const title = 'Hello World';
-    history.pushState(info, title, `${url}`);
+    history.pushState(
+        {},
+        '',
+        `http://localhost:8000/product/${product}/`
+  );
     history.go();
   }
 }
