@@ -16,7 +16,7 @@ const render = (component) => {
             {component}
           </Router>
       )
-      , document.getElementById('application'));
+      , application);
 };
 
 render(<App routes={router}/>);

@@ -47,7 +47,6 @@ const MiddleComponent = React.FunctionComponent = React.memo(() => {
 
   const onClick = React.useCallback(() => {
     if(state.search) {
-        console.log(state.search);
         window.open(`?${state.search}`);
     }
   }, [state]);

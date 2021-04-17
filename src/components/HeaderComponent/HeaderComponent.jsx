@@ -33,7 +33,7 @@ class HeaderComponent extends React.Component {
         <div className="header">
           <div>
             <img src="/assets/georgia.png" className="logo"/>
-            <h1>Wine House</h1>
+            <h1>Форум</h1>
           </div>
           <nav>
             {Authorized}
