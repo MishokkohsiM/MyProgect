@@ -23,6 +23,11 @@ export const Input = styled.div`
   flex-direction: row;
 `;
 
+export const TextArea = styled.div`
+  width: auto;
+  height: 100px;
+`;
+
 export const Button = styled.div`
   border: black 2px solid;
   width: 100px;
@@ -41,7 +46,10 @@ const MiddleComponent = React.FunctionComponent = React.memo(() => {
   })
 
   const onClick = React.useCallback(() => {
-    console.log(state.search);
+    if(state.search) {
+        console.log(state.search);
+        window.open(`?${state.search}`);
+    }
   }, [state]);
 
     const onSearchChange = React.useCallback((e) => {
@@ -60,6 +68,11 @@ const MiddleComponent = React.FunctionComponent = React.memo(() => {
                     <input onChange={onSearchChange} style={{width: '100%', height: '30px'}}/>
                     <Button onClick={onClick}>{'Поиск'}</Button>
                 </Input>
+            </Container>
+            <Container>
+                <TextArea>
+                    <textarea style={{width: '100%', height: '100%'}}/>
+                </TextArea>
             </Container>
             <div className="middle">
                 <LeftMiddleComponent/>
