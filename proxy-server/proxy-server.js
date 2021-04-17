@@ -1,6 +1,7 @@
 'use strict';
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fetch = require("node-fetch");
 const crypto = require('crypto');
 const express = require('express'),
     app = express(),
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 
 const host = '127.0.0.1';
 const port = '3031';
+const serverUrl = `http://${host}:3000`;
 
 const Products = [
     'Kindzmarauli',
@@ -89,18 +91,17 @@ app.get('/api/', (req, res) => {
 app.get('/products', (req, res) => {
     console.log('products');
     res.set('Access-Control-Allow-Origin', '*');
-    // MongoClient.connect(url, (err, db) => {
-    //     if (err) throw err;
-    //     const dbo = db.db('xui');
-    //     dbo.collection('sessions').find().toArray(function (err, results) {
-    //         if (err) throw err;
-    //         res.json({
-    //             results,
-    //         });
-    //         db.close();
-    //     });
-    // });
-    res.json({results: Prise});
+    fetch(`${serverUrl}/products`)
+        .then(res => {
+            return res.json();
+        })
+        .then(products => {
+            res.json({results: products.results});
+        })
+        .catch(error => {
+            console.log(error)
+            res.json({results: {}});
+        })
 });
 
 

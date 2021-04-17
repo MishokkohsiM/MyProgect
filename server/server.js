@@ -52,6 +52,27 @@ const User = {
   name: 'Misha'
 };
 
+const Prise = [
+  {
+    wine_name: 1,
+    wine_price: 150,
+    wine_age: 2012,
+    wine_country: 'Russian',
+  },
+  {
+    wine_name: 1,
+    wine_price: 150,
+    wine_age: 2012,
+    wine_country: 'Russian',
+  },
+  {
+    wine_name: 1,
+    wine_price: 150,
+    wine_age: 2012,
+    wine_country: 'Russian',
+  },
+];
+
 app.get('/api/', (req, res) => {
   request('http://127.0.0.1:8000', (err, response, body) => {
     if (err) {
@@ -69,17 +90,20 @@ app.get('/api/', (req, res) => {
 app.get('/products', (req, res) => {
   console.log('products');
   res.set('Access-Control-Allow-Origin', '*');
-  MongoClient.connect(url, (err, db) => {
-    if (err) throw err;
-    const dbo = db.db('xui');
-    dbo.collection('sessions').find().toArray(function (err, results) {
-      if (err) throw err;
-      res.json({
-        results,
-      });
-      db.close();
-    });
-  });
+  // MongoClient.connect(url, (err, db) => {
+  //   if (err) throw err;
+  //   const dbo = db.db('xui');
+  //   dbo.collection('sessions').find().toArray(function (err, results) {
+  //     if (err) throw err;
+  //     res.json({
+  //       results,
+  //     });
+  //     db.close();
+  //   });
+  // });
+  res.json({
+    results: Prise,
+  })
 });
 
 

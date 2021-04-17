@@ -8,18 +8,20 @@
   },
   "version": "1.0.1",
   "dependencies": {
-    "styled-components": "5.1.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
     "handlebars": "^4.3.1",
     "mongodb": "^3.5.5",
     "mysql": "^2.18.1",
+    "node-fetch": "^2.6.1",
     "react": "16.13.0",
     "react-dom": "16.13.0",
     "react-next-paging": "^7.0.7",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "styled-components": "5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
