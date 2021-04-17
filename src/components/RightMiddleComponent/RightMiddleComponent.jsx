@@ -36,7 +36,7 @@ class RightMiddleComponent extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://127.0.0.1:3000/products')
+    fetch('http://127.0.0.1:3031/products')
         .then(res => {
           console.log(res.json);
           return res.json();

@@ -29,7 +29,7 @@ class ProductMapComponent extends React.Component {
   ShowProduct = (productCard) => {
 
     productCard.preventDefault();
-    const urGet = `http://localhost:3000/product/`;
+    const urGet = `http://localhost:3031/product/`;
     const url = `http://localhost:8000/product/`;
     const product =  this.props.name;
     const info = {};
@@ -46,8 +46,8 @@ class ProductMapComponent extends React.Component {
           console.log(info);
         });
     const title = 'Hello World';
-    history.pushState(info, title, url);
-    // history.go();
+    history.pushState(info, title, `${url}`);
+    history.go();
   }
 }
 
